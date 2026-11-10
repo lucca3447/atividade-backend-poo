@@ -20,13 +20,13 @@ class Database {
         private $db;
         public function __construct($conexao_banco)
         {
-            $this->db = $conexao;
+            $this->db = $conexao_banco;
         }
 
         public function autenticar($usuario, $senha){
             $sql = "SELECT id, nome FROM usuarios WHERE usuario = ? AND senha = ?";
             $stmt = $this->db->prepare($sql);
-            $stmt = bind_param("ss",$usuario, $senha);
+            $stmt->bind_param("ss", $usuario, $senha);
             $stmt->execute();
             $resultado = $stmt->get_result();
 
@@ -37,16 +37,16 @@ class Database {
         }
     }
     class Produto{
-        private = $db;
+        private $db;
         
         public function __construct($conexao_banco )
         {
             $this->db = $conexao_banco;
         }
-        public function cadastrar($nome, $categoria, $discricao, $preco){
+        public function cadastrar($nome, $categoria, $descricao, $preco){
             $sql = "INSERT INTO produtos (nome,categoria,descricao,preco) VALUES (?,?,?,?)";
             $stmt = $this->db->prepare($sql);
-            $stmt = bind_param("sssd", $nome, $categoria, $descricao, $preco);
+            $stmt->bind_param("sssd", $nome, $categoria, $descricao, $preco);
             if($stmt->execute()){
                 return true;
             }
